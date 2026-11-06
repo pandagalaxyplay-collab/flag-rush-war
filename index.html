@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#090c12">
+    <title>Flags Battle Arena | Pro Live-Stream Edition</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://flagcdn.com">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app">
+        <header class="topbar">
+            <a class="brand" href="#" aria-label="Flags Battle Arena home">
+                <span class="brand-mark" aria-hidden="true">⚑</span>
+                <span class="brand-name">FLAGS <strong>ARENA</strong></span>
+            </a>
+            <div class="live-status">
+                <span class="live-dot" aria-hidden="true"></span>
+                <span id="battle-status" aria-live="polite">READY TO BATTLE</span>
+            </div>
+            <button id="stream-mode-toggle" class="stream-mode-toggle" type="button" aria-pressed="false">9:16 STREAM VIEW</button>
+            <div class="round-label">PRO LIVE-STREAM EDITION <span>•</span> ROUND <strong id="round-number">01</strong></div>
+        </header>
+
+        <section class="battle-layout" aria-label="Battle arena">
+            <aside class="panel leaderboard">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">195 COUNTRIES · ONE ARENA</p>
+                        <h1>Leaderboard</h1>
+                    </div>
+                    <span class="count-badge" id="alive-count">195</span>
+                </div>
+                <p class="panel-caption"><span class="status-pulse"></span> COUNTRIES STILL IN THE FIGHT</p>
+                <label class="leaderboard-search">
+                    <span aria-hidden="true">⌕</span>
+                    <input id="country-search" type="search" placeholder="Find a country..." aria-label="Find a country">
+                    <kbd>/</kbd>
+                </label>
+                <ol id="survivor-list" class="survivor-list" aria-live="polite"></ol>
+                <div class="panel-foot"><span class="legend-dot"></span> STILL ALIVE</div>
+                <section class="kill-feed" aria-label="Recent eliminations">
+                    <div class="feed-heading"><span class="eyebrow">KILL FEED</span><span class="feed-live">LIVE</span></div>
+                    <ol id="kill-feed-list" class="kill-feed-list" aria-live="polite"></ol>
+                </section>
+            </aside>
+
+            <div class="stream-stage" id="stream-stage">
+                <div id="stream-backdrop" class="stream-backdrop" aria-hidden="true">
+                    <div class="stream-backdrop-ring"></div>
+                </div>
+                <button id="stream-mode-exit" class="stream-mode-exit" type="button"
+                    aria-label="Exit stream view" title="Exit stream view">×</button>
+                <div class="stream-hud">
+                    <div class="stream-hud-card">
+                        <span class="stream-hud-label">COUNTRIES LEFT</span>
+                        <strong><span id="stream-alive-count">195</span> <small>FLAGS</small></strong>
+                    </div>
+                    <div class="stream-hud-card stream-hud-round">
+                        <span class="stream-hud-label">WORLD BATTLE</span>
+                        <strong>ROUND <span id="stream-round">01</span></strong>
+                    </div>
+                </div>
+                <div class="stream-elimination-title">
+                    <span id="stream-elimination-kicker">FLAGS BATTLE ARENA · ALL ELIMINATION</span>
+                    <strong><span id="stream-elimination-name">WHO WILL WIN?</span><em id="stream-out-label">LIVE</em></strong>
+                </div>
+                <div class="arena-column">
+                    <div id="out-popup" class="elimination-banner" aria-live="assertive" aria-atomic="true"></div>
+                    <div class="arena-shell" id="arena-shell">
+                        <div class="arena-glow" aria-hidden="true"></div>
+                        <div id="game-container" aria-label="Physics battle arena"></div>
+                        <div class="arena-label arena-label-top" aria-hidden="true">ELIMINATION ZONE</div>
+                        <div id="suspense-badge" class="suspense-badge" aria-live="polite" hidden>
+                            <span class="suspense-heart">♥</span><span id="suspense-label">FINAL 10</span>
+                        </div>
+                        <div class="center-message" id="center-message" aria-live="polite">
+                            <span class="message-kicker">195 FLAGS · ONE CHAMPION</span>
+                            <h2>THE WORLD<br><span>IS IN THE ARENA</span></h2>
+                            <p>Every flag bounces together · Eliminations are announced live</p>
+                        </div>
+                        <div id="winner-popup" class="winner-popup" aria-live="assertive" hidden>
+                            <span class="winner-kicker">LAST FLAG STANDING</span>
+                            <span id="winner-name" class="winner-name"></span>
+                            <span class="winner-wins">WINS!</span>
+                            <div class="winner-stats">
+                                <span><strong id="winner-survival">0:00</strong><small>SURVIVAL TIME</small></span>
+                                <span><strong id="winner-hits">0</strong><small>HITS TAKEN</small></span>
+                                <span><strong id="winner-round">01</strong><small>ROUND</small></span>
+                            </div>
+                            <div id="confetti-layer" class="confetti-layer" aria-hidden="true"></div>
+                        </div>
+                    </div>
+                    <div class="arena-footer">
+                        <span><span class="footer-icon">✦</span> NO PLAYERS. JUST PHYSICS.</span>
+                        <span class="arena-hint">DODGE THE SPINNER <span>·</span> SURVIVE TO WIN</span>
+                    </div>
+                </div>
+                <section class="stream-eliminations" aria-label="Eliminated countries">
+                    <div class="stream-eliminations-heading">
+                        <span class="stream-hud-label">COUNTRIES ELIMINATED</span>
+                        <strong><span id="stream-eliminated-count">0</span> / <span id="stream-total-count">195</span></strong>
+                    </div>
+                    <div class="stream-progress-track"><span id="stream-progress"></span></div>
+                    <ol id="stream-eliminated-flags" class="stream-eliminated-flags"></ol>
+                </div>
+            </div>
+
+            <aside class="panel controls-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">YOUR NEXT MOVE</p>
+                        <h2>Battle controls</h2>
+                    </div>
+                    <span class="control-icon" aria-hidden="true">⌁</span>
+                </div>
+                <p class="controls-copy">All 195 flags bounce in together. Each elimination is announced before the arena moves again.</p>
+                <button id="start-button" class="start-button" type="button">
+                    <span class="button-symbol" aria-hidden="true">▶</span>
+                    <span id="start-button-label">PAUSE BATTLE</span>
+                </button>
+                <div class="stream-toggles">
+                    <button id="auto-toggle" class="stream-toggle is-active" type="button" aria-pressed="true">
+                        <span class="toggle-indicator"></span><span id="auto-toggle-label">AUTO ROUNDS ON</span>
+                    </button>
+                    <button id="voice-toggle" class="stream-toggle is-active" type="button" aria-pressed="true">
+                        <span class="toggle-indicator"></span><span id="voice-toggle-label">VOICE ON</span>
+                    </button>
+                    <button id="effects-toggle" class="stream-toggle is-active" type="button" aria-pressed="true">
+                        <span class="toggle-indicator"></span><span id="effects-toggle-label">SFX ON</span>
+                    </button>
+                </div>
+                <button id="reset-button" class="reset-button" type="button">↻ <span>RESTART ROUND</span></button>
+
+                <div class="panel-divider"></div>
+
+                <form id="add-flag-form" class="add-flag-form">
+                    <label class="eyebrow" for="country-code">ADD A CONTENDER</label>
+                    <p class="input-caption">Enter any 2-letter country code</p>
+                    <div class="input-row">
+                        <input id="country-code" name="countryCode" type="text" maxlength="2"
+                            placeholder="e.g. IN" autocomplete="off" autocapitalize="characters"
+                            aria-describedby="form-message">
+                        <button type="submit" class="add-button">ADD FLAG <span aria-hidden="true">+</span></button>
+                    </div>
+                    <p id="form-message" class="form-message" aria-live="polite"></p>
+                </form>
+
+                <div class="panel-divider"></div>
+                <details class="youtube-chat">
+                    <summary>YouTube Live chat</summary>
+                    <p class="input-caption">Allow chat commands to spawn or power up flags.</p>
+                    <form id="youtube-chat-form">
+                        <label class="chat-field-label" for="youtube-client-id">Google OAuth client ID</label>
+                        <input id="youtube-client-id" class="chat-text-input" type="text"
+                            placeholder="Your Web application client ID" autocomplete="off">
+                        <label class="chat-field-label" for="youtube-video-id">Live video URL or ID</label>
+                        <input id="youtube-video-id" class="chat-text-input" type="text"
+                            placeholder="YouTube live URL or video ID" autocomplete="off">
+                        <div class="youtube-chat-actions">
+                            <button id="youtube-connect" class="add-button" type="submit">CONNECT CHAT</button>
+                            <button id="youtube-disconnect" class="add-button" type="button" disabled>DISCONNECT</button>
+                        </div>
+                    </form>
+                    <p id="youtube-chat-status" class="chat-status" aria-live="polite">Not connected</p>
+                    <p class="chat-commands">Commands: <code>!spawn IN</code> · <code>!boost IN</code> · <code>!shield IN</code></p>
+                </details>
+
+                <div class="panel-divider"></div>
+                <div class="how-it-works">
+                    <p class="eyebrow">THE RULES</p>
+                    <p>Keep clear of the spinning blade. Last country in the arena takes the crown.</p>
+                </div>
+            </aside>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
